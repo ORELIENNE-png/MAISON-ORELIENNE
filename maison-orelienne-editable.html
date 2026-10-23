@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAISON ORELIENNE — Atelier</title>
+<style>
+:root {
+  --site-primary: #171714;
+  --site-secondary: #d8c9ad;
+  --site-background: #f4f1eb;
+  --site-on-primary: #f8f5ef;
+  --site-on-secondary: #201d18;
+  --site-on-background: #171714;
+  --site-font-body: Arial, Helvetica, sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: light dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); }
+#app { background-color: light-dark(var(--site-background), #171714); color: light-dark(var(--site-on-background), #f4f1eb); min-height: 100vh; border-radius: 0; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+.topbar { background: var(--site-primary); color: var(--site-on-primary); text-align: center; padding: calc(10px * var(--site-spacing-scale)); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; }
+header { padding: calc(24px * var(--site-spacing-scale)) 5vw; display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid color-mix(in srgb, currentColor 18%, transparent); }
+.brand { font: calc(25px * var(--site-heading-scale))/1 var(--site-font-heading); letter-spacing: .08em; }
+.brand small { display:block; font: 9px var(--site-font-body); letter-spacing:.35em; margin-top:8px; text-align:center; }
+nav { display:flex; gap:25px; font-size:11px; letter-spacing:.15em; text-transform:uppercase; }
+nav a:hover, .text-link:hover { opacity:.6; }
+.header-actions { display:flex; align-items:center; gap:12px; }
+.pill { border:1px solid currentColor; background:transparent; color:inherit; padding:11px 14px; cursor:pointer; text-transform:uppercase; letter-spacing:.12em; font-size:10px; }
+.hero { min-height:550px; display:grid; grid-template-columns: 1fr 1fr; background:var(--site-secondary); color:var(--site-on-secondary); }
+.hero-copy { padding:8vw 7vw; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; }
+.eyebrow { font-size:10px; letter-spacing:.28em; text-transform:uppercase; }
+h1 { font: clamp(42px, 6vw, calc(82px * var(--site-heading-scale)))/.98 var(--site-font-heading); font-weight:400; letter-spacing:-.045em; margin:24px 0; max-width:600px; }
+.hero-copy p { max-width:360px; line-height:1.8; font-size:13px; }
+.cta { display:inline-block; background:var(--site-primary); color:var(--site-on-primary); border:0; padding:16px 23px; margin-top:20px; cursor:pointer; font-size:10px; letter-spacing:.17em; text-transform:uppercase; }
+.hero-art { min-height:480px; position:relative; overflow:hidden; background:#b9aa90; display:grid; place-items:center; }
+.hero-art svg { width:100%; height:100%; position:absolute; inset:0; }
+.hero-note { position:absolute; right:22px; bottom:22px; font:italic 15px var(--site-font-heading); }
+.section { padding:80px 5vw; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:30px; }
+.section h2 { font:400 calc(38px * var(--site-heading-scale))/1.1 var(--site-font-heading); margin:12px 0 0; }
+.text-link { font-size:10px; letter-spacing:.14em; text-transform:uppercase; border-bottom:1px solid currentColor; padding-bottom:5px; }
+.products { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.product { min-width:0; }
+.product-art { aspect-ratio: .78; position:relative; display:grid; place-items:center; overflow:hidden; background:#e0d8ca; color:#28241e; }
+.product-art svg { width:100%; height:100%; }
+.product-art .tag { position:absolute; top:14px; left:14px; background:#f4f1eb; padding:7px 9px; font-size:9px; letter-spacing:.12em; }
+.product-meta { display:flex; justify-content:space-between; gap:10px; margin-top:14px; font-size:12px; }
+.product-meta small { display:block; opacity:.65; font-size:10px; margin-top:6px; }
+.product-meta button { border:0; background:transparent; color:inherit; cursor:pointer; font-size:17px; }
+.story { display:grid; grid-template-columns:1fr 1fr; background:var(--site-primary); color:var(--site-on-primary); }
+.story-art { min-height:400px; background:#a99b83; display:grid; place-items:center; }
+.story-art svg { width:100%; height:100%; }
+.story-copy { padding:8vw; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; }
+.story-copy h2 { font:400 calc(42px * var(--site-heading-scale))/1.05 var(--site-font-heading); margin:22px 0; }
+.story-copy p { max-width:420px; line-height:1.9; font-size:13px; opacity:.8; }
+.newsletter { text-align:center; padding:85px 20px; background:var(--site-secondary); color:var(--site-on-secondary); }
+.newsletter h2 { font:400 calc(40px * var(--site-heading-scale)) var(--site-font-heading); margin:15px 0; }
+.newsletter p { font-size:12px; line-height:1.8; }
+.signup { margin:25px auto 0; max-width:450px; display:flex; border-bottom:1px solid currentColor; }
+.signup input { flex:1; min-width:0; border:0; background:transparent; padding:14px 3px; outline:none; color:inherit; }
+.signup button { border:0; background:transparent; cursor:pointer; padding:0 8px; letter-spacing:.12em; font-size:10px; }
+footer { background:var(--site-primary); color:var(--site-on-primary); padding:35px 5vw; display:flex; align-items:center; justify-content:space-between; gap:20px; font-size:10px; letter-spacing:.1em; }
+footer .brand { font-size:19px; }
+.modal { display:none; position:fixed; inset:0; z-index:5; background:#0009; align-items:center; justify-content:center; padding:20px; }
+.modal.open { display:flex; }
+.modal-panel { background:var(--site-background); color:var(--site-on-background); width:min(550px,100%); padding:30px; max-height:90vh; overflow:auto; }
+.modal-panel h2 { font:36px var(--site-font-heading); font-weight:400; }
+.modal-panel label { display:block; font-size:11px; margin:14px 0 6px; }
+.modal-panel input, .modal-panel textarea, .modal-panel select { width:100%; border:1px solid #aaa; background:transparent; padding:11px; color:inherit; }
+.modal-panel textarea { min-height:75px; }
+.modal-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
+.edit-hint { font-size:11px; opacity:.7; line-height:1.7; margin-top:15px; }
+.toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--site-primary); color:var(--site-on-primary); padding:13px 20px; font-size:12px; display:none; z-index:8; }
+@media(max-width:760px) {
+ header { padding:20px; flex-wrap:wrap; }
+ nav { order:3; width:100%; justify-content:center; gap:16px; font-size:9px; }
+ .brand { font-size:21px; }
+ .header-actions .pill { padding:9px; }
+ .hero { grid-template-columns:1fr; }
+ .hero-copy { padding:65px 8vw; }
+ .hero-art { min-height:390px; }
+ .section { padding:55px 20px; }
+ .products { grid-template-columns:repeat(2,1fr); gap:22px 12px; }
+ .products .product:last-child { display:none; }
+ .section h2 { font-size:32px; }
+ .story { grid-template-columns:1fr; }
+ .story-art { min-height:330px; }
+ .story-copy { padding:55px 25px; }
+ footer { flex-direction:column; text-align:center; }
+}
+@media(prefers-color-scheme:dark) {
+ .product-art { background:#38342d; color:#e8dfd1; }
+ .product-art .tag { background:#171714; color:#f4f1eb; }
+ .hero-art, .story-art { background:#625747; }
+}
+</style>
+<style>.td-a-rec,#advertising_box,#top_advertisement,a[href^="https://www.postgrespro.ru"][target="_blank"]:not(thanks-opennet.ru),[data-video_status][data-adapter="vk"] .previewContainer,a[href*="://hoster.ru"][target="_blank"]:not(thanks-opennet.ru),a[href^="https://ishosting.com"][target="_blank"]:not(thanks-opennet.ru),.hentry > div.ivr,#page > p[style^="background-color:"][style$="text-align: center;"],#video > p[style^="background-color:"][style*="font-weight: bold;"]{display:none!important;}</style><style>[nof1asudy][aq5ureet3]
+{width: unset !important}
+</style><style>[nof1asudy][ebsohtfhb]
+{padding-top: 0 !important; background-color: inherit !important}
+</style><style>[nof1asudy][oqb2kn768]
+{display: unset !important}
+</style><style>[nof1asudy][w5j576ec3]
+{cursor: pointer !important}
+</style></head>
+<body>
+<div id="app" data-sites-preview-theme="custom">
+  <div class="topbar" id="announcement">Complimentary packaging on selected orders · Atelier collection 2026</div>
+  <header>
+    <a class="brand" href="#home" id="brand">MAISON ORELIENNE<small>ATELIER · EST. 2026</small></a>
+    <nav><a href="#collection">Collection</a><a href="#maison">La Maison</a><a href="#contact">Contact</a></nav>
+    <div class="header-actions"><button class="pill" id="editOpen">Edit site</button><button class="pill" id="bagBtn">Bag <span id="bagCount">0</span></button></div>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow" id="heroEyebrow">Independent fashion house · 001</div>
+        <h1 id="heroTitle">A study in<br>quiet rebellion.</h1>
+        <p id="heroText">Everyday uniform, elevated. Distinctive silhouettes, considered details, and pieces made to become part of your story.</p>
+        <a class="cta" href="#collection" id="heroCta">Discover the collection</a>
+      </div>
+      <div class="hero-art" aria-label="Illustration of an editorial fashion figure">
+        <svg viewBox="0 0 620 700" role="img" aria-label="Minimal fashion illustration">
+          <rect width="620" height="700" fill="#b9aa90"></rect>
+          <circle cx="420" cy="150" r="90" fill="#d9cbb5" opacity=".7"></circle>
+          <path d="M0 560 Q160 510 280 570 T620 540 V700 H0Z" fill="#96856d" opacity=".5"></path>
+          <path d="M190 700 L222 365 Q260 320 315 335 Q372 341 405 390 L480 700Z" fill="#262521"></path>
+          <path d="M223 366 L145 515 L190 545 L277 430Z" fill="#34322d"></path>
+          <path d="M404 390 L472 525 L432 547 L356 435Z" fill="#34322d"></path>
+          <path d="M257 335 L255 285 L343 278 L350 351 Q305 384 257 335Z" fill="#a86f50"></path>
+          <ellipse cx="303" cy="218" rx="77" ry="105" fill="#bd8869"></ellipse>
+          <path d="M226 223 Q190 93 287 88 Q379 80 382 203 L359 160 L343 125 Q296 159 235 147Z" fill="#211f1c"></path>
+          <path d="M226 224 Q207 300 275 320 L251 270Z" fill="#211f1c"></path>
+          <path d="M379 216 Q399 280 345 314 L356 263Z" fill="#211f1c"></path>
+          <path d="M251 370 L303 421 L356 367" fill="none" stroke="#c9bba4" stroke-width="3"></path>
+          <path d="M290 445 L313 445 L321 700 L276 700Z" fill="#49463f"></path>
+          <text x="32" y="54" fill="#f4f1eb" font-family="Georgia" font-size="18" letter-spacing="4">M.O.</text>
+          <text x="32" y="82" fill="#f4f1eb" font-family="Arial" font-size="8" letter-spacing="3">FORM STUDY NO. 01</text>
+        </svg>
+        <div class="hero-note" id="heroNote">Designed to be lived in.</div>
+      </div>
+    </section>
+    <section class="section" id="collection">
+      <div class="section-head"><div><div class="eyebrow">The current selection</div><h2 id="collectionTitle">Objects of distinction</h2></div><a href="#contact" class="text-link">View all pieces ↗</a></div>
+      <div class="products" id="products">
+        <article class="product">
+          <div class="product-art"><span class="tag">01 / ESSENTIAL</span><svg viewBox="0 0 350 440" aria-label="Illustrated black T-shirt"><rect width="350" height="440" fill="#d8d0c2"></rect><ellipse cx="175" cy="380" rx="112" ry="18" fill="#bcb2a1"></ellipse><path d="M112 90 L145 72 Q175 103 205 72 L238 90 L300 140 L263 194 L235 174 L247 352 Q175 370 103 352 L115 174 L87 194 L50 140Z" fill="#20201d"></path><path d="M145 72 Q175 119 205 72" fill="none" stroke="#69675e" stroke-width="4"></path><text x="175" y="224" text-anchor="middle" fill="#d8c9ad" font-family="Georgia" font-size="17" letter-spacing="3">M.O.</text></svg></div>
+          <div class="product-meta"><div><span class="pname">Atelier Box Tee</span><small class="pdesc">Heavyweight cotton · Onyx</small><small class="pprice">Rp 389.000</small></div><button aria-label="Add Atelier Box Tee" data-add="Atelier Box Tee">＋</button></div>
+        </article>
+        <article class="product">
+          <div class="product-art"><span class="tag">02 / OUTERWEAR</span><svg viewBox="0 0 350 440" aria-label="Illustrated structured jacket"><rect width="350" height="440" fill="#c8b9a2"></rect><ellipse cx="175" cy="380" rx="112" ry="18" fill="#b3a48d"></ellipse><path d="M124 82 L151 70 L175 100 L199 70 L226 82 L270 130 L245 177 L226 163 L242 355 L108 355 L124 163 L105 177 L80 130Z" fill="#34372f"></path><path d="M151 70 L175 140 L199 70 L187 179 L175 197 L163 179Z" fill="#d3c5ac"></path><path d="M175 140 V354" stroke="#a99c85" stroke-width="2"></path><rect x="126" y="225" width="34" height="38" fill="none" stroke="#8e887a" stroke-width="2"></rect><rect x="190" y="225" width="34" height="38" fill="none" stroke="#8e887a" stroke-width="2"></rect><circle cx="181" cy="205" r="3" fill="#d8c9ad"></circle><circle cx="181" cy="224" r="3" fill="#d8c9ad"></circle></svg></div>
+          <div class="product-meta"><div><span class="pname">No. 04 Utility Jacket</span><small class="pdesc">Structured twill · Olive</small><small class="pprice">Rp 1.290.000</small></div><button aria-label="Add Utility Jacket" data-add="No. 04 Utility Jacket">＋</button></div>
+        </article>
+        <article class="product">
+          <div class="product-art"><span class="tag">03 / BOTTOMS</span><svg viewBox="0 0 350 440" aria-label="Illustrated tailored trousers"><rect width="350" height="440" fill="#d2c9bb"></rect><ellipse cx="175" cy="380" rx="105" ry="18" fill="#bcb2a2"></ellipse><path d="M111 76 Q175 91 239 76 L250 145 L226 355 L178 355 L169 192 L158 355 L105 355 L99 145Z" fill="#252723"></path><path d="M111 76 Q175 91 239 76 L235 115 Q175 129 104 115Z" fill="#373a33"></path><path d="M175 98 V188" stroke="#6d6c60" stroke-width="2"></path><path d="M120 145 L130 165 M229 145 L219 165" stroke="#777366" stroke-width="2"></path></svg></div>
+          <div class="product-meta"><div><span class="pname">Form Tailored Trouser</span><small class="pdesc">Relaxed fit · Charcoal</small><small class="pprice">Rp 749.000</small></div><button aria-label="Add tailored trousers" data-add="Form Tailored Trouser">＋</button></div>
+        </article>
+      </div>
+    </section>
+    <section class="story" id="maison">
+      <div class="story-art"><svg viewBox="0 0 600 500" aria-label="Abstract atelier still life"><rect width="600" height="500" fill="#a99b83"></rect><rect x="65" y="55" width="470" height="390" fill="#c9bba5"></rect><path d="M65 340 L535 160 V445 H65Z" fill="#8f8069" opacity=".55"></path><rect x="155" y="112" width="230" height="270" fill="#292924" transform="rotate(-7 270 247)"></rect><rect x="177" y="135" width="190" height="222" fill="#37372f" transform="rotate(-7 270 247)"></rect><text x="270" y="244" text-anchor="middle" fill="#d8c9ad" font-family="Georgia" font-size="25" letter-spacing="4" transform="rotate(-7 270 244)">MAISON</text><text x="270" y="274" text-anchor="middle" fill="#d8c9ad" font-family="Arial" font-size="10" letter-spacing="5" transform="rotate(-7 270 274)">ORELIENNE</text><circle cx="425" cy="340" r="56" fill="#ddd1be"></circle><circle cx="425" cy="340" r="43" fill="#a99b83"></circle></svg></div>
+      <div class="story-copy"><div class="eyebrow" id="storyEyebrow">Our point of view</div><h2 id="storyTitle">Made for the ones who make their own rules.</h2><p id="storyText">MAISON ORELIENNE explores the space between refined tailoring and street-born expression. We believe personal style is built slowly, through meaningful details and pieces with a point of view.</p><a href="#contact" class="cta" id="storyCta">Discover our world</a></div>
+    </section>
+    <section class="newsletter" id="contact"><div class="eyebrow">Letters from the atelier</div><h2 id="newsletterTitle">Stay in the know.</h2><p>New releases, studio notes, and first access to selected pieces.</p><form class="signup" id="signup"><input id="email" type="email" placeholder="Your email address" required="" aria-label="Email address"><button type="submit">SIGN ME UP ↗</button></form><p id="signupMsg" aria-live="polite"></p></section>
+  </main>
+  <footer><a class="brand" href="#home">MAISON ORELIENNE</a><span id="footerText">Independent apparel · Made with intention</span><span>Instagram · @maison.oreliene</span></footer>
+</div>
+<div class="modal" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+  <div class="modal-panel">
+    <div class="eyebrow">Live site editor</div><h2 id="editTitle">Make it yours.</h2>
+    <p>Edit the brand copy, collection details, and visual palette. Changes apply instantly in this preview.</p>
+    <form id="editForm">
+      <label for="brandInput">Brand name</label><input id="brandInput" value="MAISON ORELIENNE">
+      <label for="announcementInput">Announcement bar</label><input id="announcementInput" value="Complimentary packaging on selected orders · Atelier collection 2026">
+      <label for="heroTitleInput">Hero headline</label><textarea id="heroTitleInput">A study in
+quiet rebellion.</textarea>
+      <label for="heroTextInput">Hero description</label><textarea id="heroTextInput">Everyday uniform, elevated. Distinctive silhouettes, considered details, and pieces made to become part of your story.</textarea>
+      <label for="collectionInput">Collection title</label><input id="collectionInput" value="Objects of distinction">
+      <label for="storyTitleInput">About headline</label><textarea id="storyTitleInput">Made for the ones who make their own rules.</textarea>
+      <label for="teeNameInput">Product 1 name</label><input id="teeNameInput" value="Atelier Box Tee">
+      <label for="teePriceInput">Product 1 price</label><input id="teePriceInput" value="Rp 389.000">
+      <label for="jacketNameInput">Product 2 name</label><input id="jacketNameInput" value="No. 04 Utility Jacket">
+      <label for="jacketPriceInput">Product 2 price</label><input id="jacketPriceInput" value="Rp 1.290.000">
+      <label for="trouserNameInput">Product 3 name</label><input id="trouserNameInput" value="Form Tailored Trouser">
+      <label for="trouserPriceInput">Product 3 price</label><input id="trouserPriceInput" value="Rp 749.000">
+      <label for="primaryInput">Primary color</label><input id="primaryInput" type="color" value="#171714">
+      <label for="secondaryInput">Accent color</label><input id="secondaryInput" type="color" value="#d8c9ad">
+      <label for="backgroundInput">Page background</label><input id="backgroundInput" type="color" value="#f4f1eb">
+      <label for="instagramInput">Instagram handle</label><input id="instagramInput" value="@maison.oreliene">
+      <div class="modal-actions"><button class="cta" type="submit">Apply changes</button><button class="pill" type="button" id="exportBtn">Export editable HTML</button><button class="pill" type="button" id="closeEdit">Close</button></div>
+      <p class="edit-hint">This is an interactive prototype. Product prices, stock, checkout, email collection, and Instagram links are sample content and are not connected to a live store. Export creates an HTML copy with your current edits.</p>
+    </form>
+  </div>
+</div>
+<div class="modal" id="bagModal" role="dialog" aria-modal="true" aria-labelledby="bagTitle"><div class="modal-panel"><button class="pill" id="closeBag" style="float:right">Close</button><h2 id="bagTitle">Your selection</h2><div id="bagItems">Your bag is empty.</div><p class="edit-hint">This demo bag is for preview only. Checkout is not connected.</p></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const $ = id => document.getElementById(id);
+const toast = message => { const t=$('toast'); t.textContent=message; t.style.display='block'; clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>t.style.display='none',2600); };
+const fields = [
+ ['brandInput','brand','text'],['announcementInput','announcement','text'],['heroTitleInput','heroTitle','multiline'],['heroTextInput','heroText','text'],['collectionInput','collectionTitle','text'],['storyTitleInput','storyTitle','text']
+];
+function applyEdits(){
+ fields.forEach(([input,target,type])=>{ const el=$(target); const val=$(input).value; if(type==='multiline') el.innerHTML=val.split('\n').map(s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')).join('<br>'); else el.textContent=val; });
+ $('brand').innerHTML=$('brandInput').value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'<small>ATELIER · EST. 2026</small>';
+ const names=[['teeNameInput','Atelier Box Tee'],['jacketNameInput','No. 04 Utility Jacket'],['trouserNameInput','Form Tailored Trouser']];
+ const prices=[['teePriceInput'],['jacketPriceInput'],['trouserPriceInput']];
+ document.querySelectorAll('.product').forEach((p,i)=>{p.querySelector('.pname').textContent=$(names[i][0]).value;p.querySelector('.pprice').textContent=$(prices[i][0]).value;});
+ document.documentElement.style.setProperty('--site-primary',$('primaryInput').value);
+ document.documentElement.style.setProperty('--site-secondary',$('secondaryInput').value);
+ document.documentElement.style.setProperty('--site-background',$('backgroundInput').value);
+ document.querySelector('footer span:last-child').textContent='Instagram · '+$('instagramInput').value;
+ $('editModal').classList.remove('open'); toast('Changes applied to the preview');
+}
+$('editOpen').addEventListener('click',()=>$('editModal').classList.add('open'));
+$('closeEdit').addEventListener('click',()=>$('editModal').classList.remove('open'));
+$('editForm').addEventListener('submit',e=>{e.preventDefault();applyEdits();});
+let bag=[];
+document.querySelectorAll('[data-add]').forEach(btn=>btn.addEventListener('click',()=>{bag.push(btn.dataset.add);$('bagCount').textContent=bag.length;toast(btn.dataset.add+' added to your selection');}));
+$('bagBtn').addEventListener('click',()=>{ $('bagItems').innerHTML=bag.length?bag.map((item,i)=>'<p>'+item+' <button class="pill" data-remove="'+i+'">Remove</button></p>').join(''):'Your bag is empty.'; $('bagModal').classList.add('open'); $('bagItems').querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>{bag.splice(Number(b.dataset.remove),1);$('bagCount').textContent=bag.length;$('bagItems').innerHTML=bag.length?bag.map((x,i)=>'<p>'+x+' <button class="pill" data-remove="'+i+'">Remove</button></p>').join(''):'Your bag is empty.'; })); });
+$('closeBag').addEventListener('click',()=>$('bagModal').classList.remove('open'));
+$('signup').addEventListener('submit',e=>{e.preventDefault();$('signupMsg').textContent='Thank you. This demo does not store email addresses yet.';$('email').value='';});
+$('exportBtn').addEventListener('click',()=>{const clone=document.documentElement.cloneNode(true); clone.querySelectorAll('.modal').forEach(m=>m.classList.remove('open')); const blob=new Blob(['<!DOCTYPE html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'}); const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='maison-orelienne-editable.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('HTML export started');});
+</script>
+
+</body></html>
